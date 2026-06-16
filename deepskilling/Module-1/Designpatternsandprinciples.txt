@@ -1,0 +1,22 @@
+ Design Principles and Design Patterns.
+
+Solid principles :
+for better understanding,Easy - to Maintain , reusable code .
+
+principles:
+S-Single Responsibility
+O-Open/Closed
+L-Liskov Substitution
+I-Interface Segregation
+D-Dependency Inversion
+
+1.Single Responsibility
+Rule:
+A class should have only one job (one responsibility).
+1. Testing – A class with one responsibility will have far fewer test cases.
+2. Less dependency (lower coupling)
+Each class is independent
+So changing one class does not break others
+3. Easy to find code (organization)
+Small classes are easy to read and locate
+No confusion like in big mixed classes
