@@ -1,0 +1,479 @@
+Analysis of Algorithms (Simple Notes)
+What is an Algorithm?
+
+An algorithm is a step-by-step method to solve a problem.
+
+Example
+
+Find the largest number in an array.
+
+Input:
+[3, 8, 2, 10, 5]
+
+Output:
+10
+
+Algorithm:
+
+Assume first element is largest.
+Compare it with every other element.
+Update largest if needed.
+Print largest.
+What is Analysis of Algorithms?
+
+Analysis means checking how good an algorithm is.
+
+We mainly check:
+
+Time (How long it takes)
+Space (How much memory it uses)
+
+Example:
+
+Suppose there are two programs.
+
+Program A takes 2 seconds
+
+Program B takes 20 seconds
+
+Program A is better.
+
+But what if input becomes huge?
+
+That's why we analyze algorithms.
+
+Why Do We Analyze Algorithms?
+
+To compare different solutions.
+
+Example
+
+Problem:
+
+Find an element in an array.
+
+Method 1
+
+Check every element.
+
+5
+9
+3
+8
+10
+
+Search 10
+
+Check
+
+5 ❌
+
+9 ❌
+
+3 ❌
+
+8 ❌
+
+10 ✅
+
+Time increases as array grows.
+
+Method 2
+
+Use Binary Search
+
+Works only on sorted arrays.
+
+1 3 5 7 9 11 13
+
+Search 9
+
+Go to middle.
+
+If bigger → right
+
+If smaller → left
+
+Very fast.
+
+Factors That Affect Running Time
+
+Running time depends on
+
+Input size
+Computer speed
+Programming language
+Algorithm used
+
+When comparing algorithms, we ignore hardware and language.
+
+We only compare the algorithm.
+
+Time Complexity
+
+Time complexity tells
+
+How the running time increases when input size increases.
+
+We don't count seconds.
+
+We count operations.
+
+Example
+
+for(int i=0;i<n;i++)
+{
+    System.out.println(i);
+}
+
+If
+
+n = 5
+
+Loop runs
+
+5 times
+
+If
+
+n = 100
+
+Runs
+
+100 times
+
+Time Complexity
+
+O(n)
+Space Complexity
+
+Extra memory used by an algorithm.
+
+Example
+
+int a;
+int b;
+
+Uses constant memory.
+
+O(1)
+
+Example
+
+int arr[]=new int[n];
+
+Needs memory depending on n.
+
+O(n)
+Asymptotic Analysis
+
+"Asymptotic" means
+
+How an algorithm behaves for very large input.
+
+Example
+
+Instead of
+
+n=5
+
+think
+
+n=10,00,000
+
+We study how performance changes.
+
+Why Ignore Small Values?
+
+Example
+
+5n + 2
+
+If
+
+n=100000
+5×100000+2
+=500002
+
+The 2 doesn't matter much.
+
+So we focus on the largest-growing term.
+
+Asymptotic Notations
+
+There are three main notations.
+
+Big O
+Omega
+Theta
+1. Big O (O)
+
+Means
+
+Worst Case
+
+Maximum time algorithm may take.
+
+Example
+
+Linear Search
+
+Search
+
+10
+
+Array
+
+1 2 3 4 5 6 7 8 9 10
+
+Need to check all elements.
+
+10 comparisons
+
+Worst case
+
+O(n)
+2. Omega (Ω)
+
+Means
+
+Best Case
+
+Example
+
+Searching
+
+1
+
+Found immediately.
+
+Only one comparison.
+
+Ω(1)
+3. Theta (Θ)
+
+Average case.
+
+Example
+
+Searching
+
+6
+
+May check half of the array.
+
+Average performance.
+
+Θ(n)
+Common Time Complexities
+Complexity	Name	Example
+O(1)	Constant	Access array element
+O(log n)	Logarithmic	Binary Search
+O(n)	Linear	Linear Search
+O(n log n)	Linear Log	Merge Sort
+O(n²)	Quadratic	Bubble Sort
+O(n³)	Cubic	Triple Nested Loops
+O(2ⁿ)	Exponential	Recursive subsets
+O(n!)	Factorial	Traveling Salesman (Brute Force)
+O(1) Constant Time
+int x = arr[5];
+
+No matter if array has
+
+10 elements
+
+1000 elements
+
+100000 elements
+
+Only one operation.
+
+O(1)
+O(log n)
+
+Every step removes half.
+
+Example
+
+Binary Search
+
+1 2 3 4 5 6 7 8 9
+
+Search 9
+
+Check middle
+
+↓
+
+Half removed
+
+↓
+
+Again middle
+
+↓
+
+Half removed
+
+Very fast.
+
+O(log n)
+O(n)
+
+One loop.
+
+for(int i=0;i<n;i++)
+{
+}
+
+Runs n times.
+
+O(n)
+O(n²)
+
+Two nested loops.
+
+for(i=0;i<n;i++)
+{
+    for(j=0;j<n;j++)
+    {
+
+    }
+}
+
+If
+
+n=5
+5×5=25
+
+Operations.
+
+O(n²)
+O(n³)
+
+Three nested loops.
+
+for()
+{
+    for()
+    {
+        for()
+        {
+
+        }
+    }
+}
+O(n³)
+O(n log n)
+
+Seen in efficient sorting algorithms.
+
+Examples
+
+Merge Sort
+Heap Sort
+Quick Sort (Average Case)
+
+Better than
+
+O(n²)
+O(2ⁿ)
+
+Every element has two choices.
+
+Take it
+
+Don't take it
+
+Example
+
+Generating all subsets.
+
+O(2ⁿ)
+O(n!)
+
+Very slow.
+
+Example
+
+Trying every possible order of cities in the Traveling Salesman Problem.
+
+O(n!)
+Best, Average and Worst Case
+
+Example
+
+Linear Search
+
+Array
+
+10 20 30 40 50
+
+Search
+
+10
+
+Found immediately.
+
+Best
+
+O(1)
+
+Search
+
+30
+
+Average
+
+O(n)
+
+Search
+
+50
+
+Worst
+
+O(n)
+Rules for Finding Time Complexity
+Rule 1: Simple Statements
+a = b + c;
+O(1)
+Rule 2: One Loop
+for(i=0;i<n;i++)
+O(n)
+Rule 3: Two Nested Loops
+for()
+{
+   for()
+   {
+
+   }
+}
+O(n²)
+Rule 4: Consecutive Loops
+for(i=0;i<n;i++)
+
+then
+
+for(i=0;i<n;i++)
+O(n+n)
+
+↓
+
+O(2n)
+
+↓
+
+O(n)
+
+Constants are ignored.
+
+Rule 5: Different Loop Sizes
+for(i=0;i<n;i++)
+for(j=0;j<m;j++)
+O(n+m)
+Rule 6: Nested Different Loops
+for(i=0;i<n;i++)
+
+   for(j=0;j<m;j++)
+O(nm)

@@ -1,0 +1,306 @@
+What is an Array?
+
+An array is a collection of elements of the same data type stored in continuous (contiguous) memory locations.
+
+Think of an array like a row of lockers.
+
+Index:   0   1   2   3   4
+Value:  10  20  30  40  50
+
+Each locker has:
+
+An index (position)
+A value (stored data)
+Why Do We Use Arrays?
+
+Without arrays:
+
+int a = 10;
+int b = 20;
+int c = 30;
+int d = 40;
+
+With arrays:
+
+int[] arr = {10, 20, 30, 40};
+
+Arrays make it easy to:
+
+Store many values
+Access values quickly
+Process data using loops
+Features of Arrays
+Stores elements of the same type
+Memory is contiguous
+Fixed size after creation
+Index starts from 0
+Fast access using the index
+Array Declaration
+int[] arr;
+
+or
+
+int arr[];
+Array Creation
+int[] arr = new int[5];
+
+Creates an array of size 5.
+
+Default values:
+
+0 0 0 0 0
+Array Initialization
+int[] arr = {10, 20, 30, 40, 50};
+Accessing Elements
+System.out.println(arr[2]);
+
+Output:
+
+30
+
+Index:
+
+0  1  2  3  4
+10 20 30 40 50
+Updating an Element
+arr[1] = 100;
+
+Before:
+
+10 20 30 40
+
+After:
+
+10 100 30 40
+Traversing an Array
+Using a for loop
+for (int i = 0; i < arr.length; i++) {
+    System.out.println(arr[i]);
+}
+Using a for-each loop
+for (int num : arr) {
+    System.out.println(num);
+}
+Length of an Array
+System.out.println(arr.length);
+
+Output:
+
+5
+Memory Representation
+Index:      0     1     2     3
+Address: 1000  1004  1008  1012
+Value:     10    20    30    40
+
+Because memory is contiguous, arrays support fast random access.
+
+Time Complexity of Array Operations
+Access by Index
+arr[3]
+
+Time: O(1)
+
+Reason: Direct memory access.
+
+Update by Index
+arr[2] = 50;
+
+Time: O(1)
+
+Traverse
+for (int i = 0; i < arr.length; i++)
+
+Time: O(n)
+
+Search
+Linear Search
+
+Check each element one by one.
+
+Time:
+
+Best: O(1)
+Average: O(n)
+Worst: O(n)
+Binary Search
+
+Works only on sorted arrays.
+
+Time:
+
+Best: O(1)
+Average: O(log n)
+Worst: O(log n)
+Inserting an Element
+
+Example:
+
+10 20 30 40
+
+Insert 25 at index 2.
+
+Shift elements:
+
+10 20 30 30 40
+
+Insert:
+
+10 20 25 30 40
+
+Time: O(n)
+
+Reason: Elements must be shifted.
+
+Deleting an Element
+
+Example:
+
+10 20 30 40 50
+
+Delete 30.
+
+Shift remaining elements left:
+
+10 20 40 50
+
+Time: O(n)
+
+Advantages of Arrays
+Simple to use
+Fast access using index
+Efficient memory usage
+Easy traversal
+Foundation for many algorithms
+Disadvantages of Arrays
+Fixed size
+Insertion is slow
+Deletion is slow
+Can waste memory if oversized
+Stores only one data type
+Types of Arrays
+1. One-Dimensional Array (1D)
+int[] arr = {10, 20, 30};
+
+Looks like:
+
+10 20 30
+2. Two-Dimensional Array (2D)
+int[][] arr = {
+    {1, 2},
+    {3, 4}
+};
+
+Looks like:
+
+1 2
+3 4
+
+Used for:
+
+Matrices
+Game boards
+Tables
+3. Multidimensional Array
+int[][][] arr = new int[2][3][4];
+
+Used for:
+
+3D graphics
+Scientific data
+Simulations
+Common Array Operations
+Find Largest Element
+Input:
+5 2 9 1
+
+Output:
+9
+
+Time: O(n)
+
+Find Smallest Element
+Input:
+8 6 2 9
+
+Output:
+2
+
+Time: O(n)
+
+Reverse an Array
+Before:
+1 2 3 4
+
+After:
+4 3 2 1
+
+Time: O(n)
+
+Sum of Elements
+Input:
+1 2 3 4
+
+Output:
+10
+
+Time: O(n)
+
+Frequency Count
+Input:
+1 2 2 3 3 3
+
+Output:
+
+1 → 1
+
+2 → 2
+
+3 → 3
+
+Time: O(n) (using a hash map)
+
+Rotate an Array
+
+Left Rotation:
+
+1 2 3 4 5
+
+↓
+
+2 3 4 5 1
+
+Right Rotation:
+
+1 2 3 4 5
+
+↓
+
+5 1 2 3 4
+Remove Duplicates (Sorted Array)
+Input:
+1 1 2 2 3 3
+
+Output:
+1 2 3
+
+Time: O(n)
+
+Time Complexity Summary
+Access: O(1)
+Update: O(1)
+Traverse: O(n)
+Linear Search: O(n)
+Binary Search (sorted array): O(log n)
+Insert: O(n)
+Delete: O(n)
+Arrays vs Linked Lists
+Arrays
+Fixed size
+Contiguous memory
+Fast random access: O(1)
+Slow insertion/deletion: O(n)
+Linked Lists
+Dynamic size
+Non-contiguous memory
+Sequential access: O(n)
+Fast insertion/deletion (if node is known): O(1)

@@ -1,0 +1,360 @@
+What is Searching?
+
+Searching is the process of finding a specific element in a collection of data (such as an array or list).
+
+Example:
+
+Array:
+10 20 30 40 50
+
+Search = 30
+
+Output:
+Element Found at Index 2
+
+If the element doesn't exist:
+
+Search = 60
+
+Output:
+Element Not Found
+Why Do We Need Searching?
+
+Searching is used everywhere:
+
+Finding a contact in your phone
+Searching a product on Amazon
+Searching a student record
+Searching a file on your computer
+Database queries
+Search engines like Google
+Terminologies
+Key (Target)
+
+The element we want to search.
+
+Example:
+
+Array:
+5 10 15 20 25
+
+Key = 20
+
+Here,
+
+20
+
+is called the Key.
+
+Search Space
+
+The collection where we perform searching.
+
+Example
+
+5 10 15 20 25
+
+Entire array is the search space.
+
+Successful Search
+
+Element is found.
+
+Example
+
+Search = 15
+
+Output
+
+Found
+Unsuccessful Search
+
+Element is not present.
+
+Example
+
+Search = 100
+
+Output
+
+Not Found
+Types of Searching Algorithms
+
+There are many searching algorithms.
+
+Most important are:
+
+Linear Search
+Binary Search
+Jump Search
+Interpolation Search
+Exponential Search
+Fibonacci Search
+Ternary Search
+
+For placements, Linear Search and Binary Search are the most important.
+
+1. Linear Search
+Idea
+
+Check every element one by one until the target is found.
+
+Example
+
+10 20 30 40 50
+
+Search = 40
+
+Check
+
+10 ❌
+
+20 ❌
+
+30 ❌
+
+40 ✅
+
+Found.
+
+Algorithm
+Start from index 0.
+Compare current element with target.
+If equal, return index.
+Otherwise move to the next element.
+If the end is reached, return "Not Found".
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(n)
+
+Worst
+
+O(n)
+
+Space
+
+O(1)
+Advantages
+Very simple
+Works on unsorted arrays
+Easy to implement
+Disadvantages
+Slow for large arrays
+2. Binary Search
+Idea
+
+Instead of checking every element, repeatedly divide the array into two halves.
+
+Works only on sorted arrays.
+
+Example
+
+10 20 30 40 50 60 70
+
+Search = 60
+
+Middle
+
+40
+
+60 > 40
+
+Go right
+
+50 60 70
+
+Middle
+
+60
+
+Found
+Algorithm
+Find the middle element.
+If target equals middle, return.
+If target is smaller, search the left half.
+If target is larger, search the right half.
+Repeat until found or search space becomes empty.
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(log n)
+
+Worst
+
+O(log n)
+
+Space (Iterative)
+
+O(1)
+Advantages
+Very fast
+Efficient for large datasets
+Disadvantages
+Requires a sorted array
+3. Jump Search
+Idea
+
+Instead of checking one by one, jump fixed-size blocks (usually √n).
+
+Example
+
+10 20 30 40 50 60 70 80 90
+
+Search = 70
+
+Jump
+
+10 → 40 → 70
+
+Then perform a small linear search if needed.
+
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(√n)
+
+Worst
+
+O(√n)
+
+Works only on sorted arrays.
+
+4. Interpolation Search
+Idea
+
+Instead of always checking the middle, estimate where the element is likely to be based on its value.
+
+Works best when values are uniformly distributed.
+
+Example
+
+10 20 30 40 50 60 70
+
+Searching 60 will estimate a position near the end.
+
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(log log n)
+
+Worst
+
+O(n)
+
+Requires a sorted array.
+
+5. Exponential Search
+Idea
+
+First find a range where the target might exist by doubling the index (1, 2, 4, 8, ...), then use Binary Search within that range.
+
+Useful when the array size is very large or unknown.
+
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(log n)
+
+Worst
+
+O(log n)
+6. Fibonacci Search
+Idea
+
+Uses Fibonacci numbers to divide the search space instead of always taking the middle.
+
+Works on sorted arrays.
+
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(log n)
+
+Worst
+
+O(log n)
+7. Ternary Search
+Idea
+
+Split the array into three parts instead of two.
+
+Works only on sorted arrays.
+
+Time Complexity
+
+Best
+
+O(1)
+
+Average
+
+O(log₃ n)
+
+Worst
+
+O(log₃ n)
+Comparison of Searching Algorithms
+Linear Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: Yes
+Best: O(1)
+Average: O(n)
+Worst: O(n)
+Binary Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Best: O(1)
+Average: O(log n)
+Worst: O(log n)
+Jump Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Average/Worst: O(√n)
+Interpolation Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Average: O(log log n)
+Worst: O(n)
+Exponential Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Average/Worst: O(log n)
+Fibonacci Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Average/Worst: O(log n)
+Ternary Search
+Works on sorted arrays: Yes
+Works on unsorted arrays: No
+Average/Worst: O(log₃ n)
