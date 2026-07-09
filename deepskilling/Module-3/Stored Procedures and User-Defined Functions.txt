@@ -1,0 +1,20 @@
+What is a Stored Procedure?,
+Benefits of Using Stored
+Procedures, Types of Stored
+Procedures - User-defined,
+Temporary, System, Extended UserDefined, Create a Stored Procedure,
+Modify a Stored Procedure, Delete a
+Stored Procedure, Execute a Stored
+Procedure, Grant Permissions on a
+Stored Procedure, Return Data from
+a Stored Procedure, Rename a
+Stored Procedure, Parameters,
+What are Functions in SQL Server?,
+Benefits of user-defined functions,
+Types of functions-Scalar functions,
+Table-valued functions, System
+functions, Built-in system functions,
+Create User-defined Functions,
+Modify User-defined Functions,
+Delete User-defined Functions,
+Execute User-defined Functions

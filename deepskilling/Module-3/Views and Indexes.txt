@@ -1,0 +1,10 @@
+Introduction to Views, Creating
+Views, Modifying Views, Dropping
+Views, Types of Views, Updating
+Views, Indexed Views, Security and
+Views, Introduction to Indexes,
+Types of Indexes, Creating Indexes,
+Modifying Indexes, Dropping
+Indexes, Covering Indexes, Index
+Fragmentation, Indexing and Query
+Optimization

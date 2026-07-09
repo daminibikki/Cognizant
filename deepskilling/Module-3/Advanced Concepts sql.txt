@@ -1,0 +1,13 @@
+Introduction to SQL Server, SQL
+Server Editions, Key Components
+and Services of SQL Server, SQL
+Server Instances, SQL Server
+Management Studio
+
+OVER(), PARTITION BY,
+ROW_NUMBER, RANK,
+DENSE_RANK, GROUPING SETS,
+CUBE, ROLLUP, WITH Statement,
+Common Table Expression (CTE),
+Recursive CTE, MERGE, PIVOT,
+UNPIVOT

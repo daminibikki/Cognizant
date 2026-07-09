@@ -1,0 +1,8 @@
+What are transactions?, ACID
+Properties, Transaction States,
+Transaction Management
+Statements, Savepoints, Implicit vs.
+Explicit Transactions, Nested
+Transactions, Transaction Isolation
+Levels, Locking and Blocking,
+Transaction Deadlocks

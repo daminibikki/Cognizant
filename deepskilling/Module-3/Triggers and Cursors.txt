@@ -1,0 +1,13 @@
+What are Triggers?, When we use
+Triggers?, Types of SQL Server
+Triggers, DML Triggers - After
+Triggers,Instead Of Triggers, Logon
+Triggers, Create Trigger, Modify
+Triggers using SSMS, DELETE
+Triggers, Advantages of Triggers,
+Disadvantages of Triggers, What are
+Cursors?, Life Cycle of the Cursor,
+Uses of SQL Server Cursor, Types of
+Cursors in SQL Server, Limitations of
+SQL Server Cursor, Alternates to
+Cursor 

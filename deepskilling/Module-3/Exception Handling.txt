@@ -1,0 +1,7 @@
+What are Exceptions?, Types of SQL
+Server Exceptions - System Defined,
+User Defined, Retrieving detailed
+information on the error,
+TRY/CATCH, Using Nested
+TRY...CATCH Constructs, THROW
+and RAISERROR
