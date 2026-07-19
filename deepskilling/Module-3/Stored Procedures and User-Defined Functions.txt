@@ -1,20 +1,451 @@
-What is a Stored Procedure?,
-Benefits of Using Stored
-Procedures, Types of Stored
-Procedures - User-defined,
-Temporary, System, Extended UserDefined, Create a Stored Procedure,
-Modify a Stored Procedure, Delete a
-Stored Procedure, Execute a Stored
-Procedure, Grant Permissions on a
-Stored Procedure, Return Data from
-a Stored Procedure, Rename a
-Stored Procedure, Parameters,
-What are Functions in SQL Server?,
-Benefits of user-defined functions,
-Types of functions-Scalar functions,
-Table-valued functions, System
-functions, Built-in system functions,
-Create User-defined Functions,
-Modify User-defined Functions,
-Delete User-defined Functions,
-Execute User-defined Functions
+What is a Stored Procedure?
+A Stored Procedure is a collection of SQL statements stored in the database that can be executed whenever needed.
+
+Instead of writing the same query repeatedly, you save it once and execute it many times.
+
+Example
+
+CREATE PROCEDURE GetEmployees
+AS
+BEGIN
+SELECT * FROM Employee;
+END;
+Execute
+
+EXEC GetEmployees;
+Benefits of Stored Procedures
+Reusable code
+
+Faster execution
+
+Improves security
+
+Reduces network traffic
+
+Easy to maintain
+
+Reduces duplicate code
+
+Types of Stored Procedures
+1. User-defined Stored Procedure
+Created by the user.
+
+Example
+
+CREATE PROCEDURE GetStudents
+AS
+SELECT * FROM Student;
+2. Temporary Stored Procedure
+Exists only temporarily.
+
+Two types:
+
+Local Temporary
+Starts with #
+
+CREATE PROCEDURE #TempProc
+AS
+SELECT * FROM Employee;
+Visible only in the current session.
+
+Global Temporary
+Starts with ##
+
+CREATE PROCEDURE ##TempProc
+AS
+SELECT * FROM Employee;
+Visible to all sessions.
+
+3. System Stored Procedure
+Already provided by SQL Server.
+
+Examples
+
+sp_help
+sp_help Employee;
+sp_databases;
+4. Extended Stored Procedure
+Created using external DLL files.
+
+Example
+
+xp_cmdshell
+(Used rarely.)
+
+Create a Stored Procedure
+Syntax
+
+CREATE PROCEDURE ProcedureName
+AS
+BEGIN
+
+SQL Statements
+
+END;
+Example
+
+CREATE PROCEDURE ShowEmployee
+
+AS
+
+BEGIN
+
+SELECT * FROM Employee;
+
+END;
+Execute a Stored Procedure
+Syntax
+
+EXEC ProcedureName;
+Example
+
+EXEC ShowEmployee;
+Modify (Alter) a Stored Procedure
+Syntax
+
+ALTER PROCEDURE ProcedureName
+
+AS
+
+BEGIN
+
+SQL Statements
+
+END;
+Example
+
+ALTER PROCEDURE ShowEmployee
+
+AS
+
+BEGIN
+
+SELECT Name,Salary
+
+FROM Employee;
+
+END;
+Delete a Stored Procedure
+Syntax
+
+DROP PROCEDURE ProcedureName;
+Example
+
+DROP PROCEDURE ShowEmployee;
+Rename a Stored Procedure
+Syntax
+
+EXEC sp_rename
+
+'OldProcedure',
+
+'NewProcedure';
+Example
+
+EXEC sp_rename
+
+'ShowEmployee',
+
+'DisplayEmployee';
+Grant Permission
+Allows another user to execute the procedure.
+
+Syntax
+
+GRANT EXECUTE
+
+ON ProcedureName
+
+TO UserName;
+Example
+
+GRANT EXECUTE
+
+ON ShowEmployee
+
+TO John;
+Return Data from Stored Procedure
+Example
+
+CREATE PROCEDURE GetEmployee
+
+AS
+
+BEGIN
+
+SELECT *
+
+FROM Employee;
+
+END;
+Execute
+
+EXEC GetEmployee;
+Returns all employee records.
+
+Parameters
+Parameters allow values to be passed into a stored procedure.
+
+Syntax
+
+CREATE PROCEDURE ProcedureName
+
+@Parameter datatype
+
+AS
+
+BEGIN
+
+SQL Statement
+
+END;
+Example
+
+CREATE PROCEDURE EmployeeById
+
+@Id INT
+
+AS
+
+BEGIN
+
+SELECT *
+
+FROM Employee
+
+WHERE Id=@Id;
+
+END;
+Execute
+
+EXEC EmployeeById 2;
+Output
+
+Employee with ID = 2
+
+What are Functions in SQL Server?
+A Function is a database object that performs a task and always returns a value.
+
+Unlike stored procedures, functions must return something.
+
+Benefits of User-defined Functions
+Reusable
+
+Reduces duplicate code
+
+Improves readability
+
+Easy maintenance
+
+Can be used inside SELECT statements
+
+Types of Functions
+1. Scalar Function
+Returns one value.
+
+Example
+
+CREATE FUNCTION Square
+
+(@Num INT)
+
+RETURNS INT
+
+AS
+
+BEGIN
+
+RETURN @Num*@Num;
+
+END;
+Execute
+
+SELECT dbo.Square(5);
+Output
+
+25
+2. Table-Valued Function
+Returns a table.
+
+Example
+
+CREATE FUNCTION EmployeeList()
+
+RETURNS TABLE
+
+AS
+
+RETURN
+
+(
+
+SELECT *
+
+FROM Employee
+
+);
+Execute
+
+SELECT *
+
+FROM EmployeeList();
+3. System Functions
+Already provided by SQL Server.
+
+Examples
+
+GETDATE()
+Returns current date.
+
+SELECT GETDATE();
+LEN()
+Returns string length.
+
+SELECT LEN('SQL');
+Output
+
+3
+UPPER()
+Converts to uppercase.
+
+SELECT UPPER('sql');
+Output
+
+SQL
+LOWER()
+Converts to lowercase.
+
+SELECT LOWER('SQL');
+Output
+
+sql
+ROUND()
+Rounds a number.
+
+SELECT ROUND(12.567,2);
+Output
+
+12.57
+Built-in System Functions
+Common built-in functions
+
+String Functions
+LEN()
+
+UPPER()
+
+LOWER()
+
+SUBSTRING()
+
+REPLACE()
+
+Date Functions
+GETDATE()
+
+YEAR()
+
+MONTH()
+
+DAY()
+
+Mathematical Functions
+ABS()
+
+ROUND()
+
+SQRT()
+
+POWER()
+
+Aggregate Functions
+SUM()
+
+AVG()
+
+MAX()
+
+MIN()
+
+COUNT()
+
+Create User-defined Function
+Syntax
+
+CREATE FUNCTION FunctionName
+
+(@Parameter datatype)
+
+RETURNS datatype
+
+AS
+
+BEGIN
+
+RETURN value;
+
+END;
+Example
+
+CREATE FUNCTION AddFive
+
+(@Num INT)
+
+RETURNS INT
+
+AS
+
+BEGIN
+
+RETURN @Num+5;
+
+END;
+Execute User-defined Function
+SELECT dbo.AddFive(10);
+Output
+
+15
+Modify User-defined Function
+Syntax
+
+ALTER FUNCTION FunctionName
+
+(@Parameter datatype)
+
+RETURNS datatype
+
+AS
+
+BEGIN
+
+RETURN value;
+
+END;
+Example
+
+ALTER FUNCTION AddFive
+
+(@Num INT)
+
+RETURNS INT
+
+AS
+
+BEGIN
+
+RETURN @Num+10;
+
+END;
+Delete User-defined Function
+Syntax
+
+DROP FUNCTION FunctionName;
+Example
+
+DROP FUNCTION AddFive;
+Stored Procedure vs Function
+Stored Procedure	Function
+May or may not return data	Must return a value
+Called using EXEC	Called using SELECT
+Can use INSERT, UPDATE, DELETE	Cannot modify database data (generally)
+Can return multiple result sets	Returns one value or one table

@@ -1,10 +1,238 @@
-Introduction to Views, Creating
-Views, Modifying Views, Dropping
-Views, Types of Views, Updating
-Views, Indexed Views, Security and
-Views, Introduction to Indexes,
-Types of Indexes, Creating Indexes,
-Modifying Indexes, Dropping
-Indexes, Covering Indexes, Index
-Fragmentation, Indexing and Query
-Optimization
+
+Part 1: Views
+1. Introduction to Views
+A View is a virtual table created from one or more tables.
+
+It stores the SQL query, not the actual data.
+
+Whenever you query the view, SQL Server retrieves the latest data from the underlying tables.
+
+Example
+
+Table: Employee
+
+ID	Name	Salary
+1	John	50000
+2	Alice	60000
+View:
+
+CREATE VIEW EmployeeView AS
+SELECT Name, Salary
+FROM Employee;
+Now,
+
+SELECT * FROM EmployeeView;
+Output:
+
+Name	Salary
+John	50000
+Alice	60000
+2. Creating Views
+Syntax
+
+CREATE VIEW ViewName
+AS
+SELECT column1, column2
+FROM TableName;
+Example
+
+CREATE VIEW StudentView
+AS
+SELECT Name, Marks
+FROM Student;
+3. Modifying Views
+Use
+
+ALTER VIEW StudentView
+AS
+SELECT Name, Marks, Branch
+FROM Student;
+This changes the view definition.
+
+4. Dropping Views
+Delete the view
+
+DROP VIEW StudentView;
+Only the view is deleted.
+
+The original table remains unchanged.
+
+5. Types of Views
+A. Simple View
+Based on one table
+
+Easy to update
+
+Example
+
+CREATE VIEW EmpView
+AS
+SELECT Name, Salary
+FROM Employee;
+B. Complex View
+Based on multiple tables
+
+Uses JOIN, GROUP BY, Aggregate functions
+
+Example
+
+CREATE VIEW EmpDeptView
+AS
+SELECT e.Name, d.Department
+FROM Employee e
+JOIN Department d
+ON e.DeptId = d.DeptId;
+6. Updating Views
+If a view is simple, you can update it.
+
+Example
+
+UPDATE EmployeeView
+SET Salary = 70000
+WHERE Name = 'John';
+The original table is updated.
+
+Complex views are often not updateable.
+
+7. Indexed Views
+Normally, views do not store data.
+
+An Indexed View stores the query results physically using an index, improving performance for repeated queries.
+
+Benefits:
+
+Faster query execution
+
+Useful for complex queries
+
+8. Security and Views
+Views can hide sensitive columns.
+
+Example
+
+Table
+
+ID	Name	Salary
+1	John	50000
+View
+
+CREATE VIEW PublicEmployee
+AS
+SELECT ID, Name
+FROM Employee;
+Users querying PublicEmployee cannot see the Salary column.
+
+Part 2: Indexes
+9. Introduction to Indexes
+An Index improves the speed of data retrieval.
+
+Without an index:
+
+Book
+
+Page1
+Page2
+Page3
+...
+Page500
+You search page by page.
+
+With an index:
+
+Java → Page 250
+SQL → Page 380
+You go directly to the required page.
+
+10. Types of Indexes
+Clustered Index
+Sorts and stores the actual table data.
+
+Only one clustered index per table.
+
+Non-Clustered Index
+Stores pointers to the data.
+
+A table can have multiple non-clustered indexes.
+
+Difference
+Clustered	Non-Clustered
+Stores actual data in sorted order	Stores pointers to data
+One per table	Multiple per table
+Faster for range queries	Good for searches and lookups
+11. Creating Indexes
+Syntax
+
+CREATE INDEX IX_Name
+ON Employee(Name);
+This creates an index on the Name column.
+
+12. Modifying Indexes
+Indexes are generally modified by rebuilding or reorganizing them.
+
+Example
+
+ALTER INDEX IX_Name
+ON Employee
+REBUILD;
+13. Dropping Indexes
+DROP INDEX IX_Name
+ON Employee;
+Deletes the index only.
+
+14. Covering Indexes
+A Covering Index contains all the columns needed for a query.
+
+Example
+
+Query
+
+SELECT Name, Salary
+FROM Employee;
+If the index already contains Name and Salary, SQL Server doesn't need to read the table, making the query faster.
+
+15. Index Fragmentation
+Over time, INSERT, UPDATE, and DELETE operations can scatter index pages.
+
+This is called fragmentation.
+
+Effects:
+
+Slower queries
+
+More disk reads
+
+Solutions:
+
+Reorganize the index
+
+Rebuild the index
+
+16. Indexing and Query Optimization
+The SQL Server Query Optimizer decides whether to use an index.
+
+Example
+
+Without index
+
+SELECT *
+FROM Employee
+WHERE Name = 'John';
+SQL Server scans the entire table.
+
+With an index on Name, it performs an Index Seek, which is much faster.
+
+Advantages of Indexes
+Faster SELECT queries
+
+Faster searching
+
+Faster sorting
+
+Improved JOIN performance
+
+Disadvantages of Indexes
+Consume extra storage
+
+Slow down INSERT, UPDATE, and DELETE operations because indexes also need updating
+
+Require regular maintenance (rebuild/reorganize)

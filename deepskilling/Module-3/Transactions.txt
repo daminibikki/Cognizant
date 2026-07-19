@@ -1,8 +1,325 @@
-What are transactions?, ACID
-Properties, Transaction States,
-Transaction Management
-Statements, Savepoints, Implicit vs.
-Explicit Transactions, Nested
-Transactions, Transaction Isolation
-Levels, Locking and Blocking,
+What are Transactions?
+A Transaction is a group of one or more SQL statements that are executed as a single unit.
+
+Either all statements are completed successfully, or none of them are.
+
+Example:
+
+Transfer ₹1000 from Account A to Account B.
+
+Money should be deducted and added.
+
+If one step fails, both operations are cancelled.
+
+Why Use Transactions?
+Maintains data consistency
+
+Prevents data loss
+
+Ensures all operations succeed together
+
+Supports rollback if an error occurs
+
+ACID Properties
+Every transaction follows ACID properties.
+
+1. Atomicity
+Meaning: All or Nothing.
+
+If one statement fails, the entire transaction is cancelled.
+
+Example:
+
+Withdraw ₹500
+
+Deposit ₹500
+
+If deposit fails → withdrawal is also cancelled.
+
+2. Consistency
+The database remains correct before and after the transaction.
+
+Example:
+
+Total bank balance remains the same after money transfer.
+
+3. Isolation
+Multiple transactions do not interfere with each other.
+
+Example:
+
+Two users updating the same account should not affect each other's work.
+
+4. Durability
+Once committed, changes are permanent.
+
+Even if the server crashes, committed data is not lost.
+
+Transaction States
+1. Active
+Transaction is executing.
+
+2. Partially Committed
+Last SQL statement executed.
+
+Waiting for COMMIT.
+
+3. Committed
+Transaction completed successfully.
+
+Changes are permanently saved.
+
+4. Failed
+An error occurred.
+
+5. Aborted (Rolled Back)
+Transaction is cancelled.
+
+All changes are undone.
+
+Transaction Management Statements
+BEGIN TRANSACTION
+Starts a transaction.
+
+BEGIN TRANSACTION;
+COMMIT
+Saves changes permanently.
+
+COMMIT;
+ROLLBACK
+Cancels all changes.
+
+ROLLBACK;
+Example
+BEGIN TRANSACTION;
+
+UPDATE Account
+SET Balance = Balance - 1000
+WHERE Id = 1;
+
+UPDATE Account
+SET Balance = Balance + 1000
+WHERE Id = 2;
+
+COMMIT;
+If an error occurs,
+
+ROLLBACK;
+Savepoints
+A Savepoint is a point inside a transaction where you can roll back partially instead of cancelling the whole transaction.
+
+Syntax
+
+SAVE TRANSACTION SavePointName;
+Example
+
+BEGIN TRANSACTION;
+
+INSERT INTO Student VALUES(1,'Ram');
+
+SAVE TRANSACTION S1;
+
+INSERT INTO Student VALUES(2,'Ravi');
+
+ROLLBACK TRANSACTION S1;
+
+COMMIT;
+Result:
+
+First INSERT is saved.
+
+Second INSERT is removed.
+
+Implicit vs Explicit Transactions
+Implicit Transaction
+SQL Server starts the transaction automatically.
+
+You only need to commit or rollback.
+
+Example
+
+SET IMPLICIT_TRANSACTIONS ON;
+
+INSERT INTO Student
+VALUES(1,'Ram');
+
+COMMIT;
+Explicit Transaction
+Programmer starts the transaction manually.
+
+Example
+
+BEGIN TRANSACTION;
+
+INSERT INTO Student
+VALUES(1,'Ram');
+
+COMMIT;
+Difference
+Implicit	Explicit
+Starts automatically	Started manually
+Less control	More control
+Uses SET IMPLICIT_TRANSACTIONS ON	Uses BEGIN TRANSACTION
+Nested Transactions
+A transaction inside another transaction.
+
+Example
+
+BEGIN TRANSACTION;
+
+INSERT INTO Student
+VALUES(1,'Ram');
+
+BEGIN TRANSACTION;
+
+INSERT INTO Student
+VALUES(2,'Ravi');
+
+COMMIT;
+
+COMMIT;
+Only after the outer COMMIT are all changes fully committed.
+
+Transaction Isolation Levels
+Isolation level controls how one transaction sees changes made by another transaction.
+
+1. READ UNCOMMITTED
+Lowest isolation
+
+Dirty reads allowed
+
+Fastest
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+2. READ COMMITTED (Default)
+Reads only committed data
+
+No dirty reads
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+3. REPEATABLE READ
+Prevents dirty reads
+
+Prevents non-repeatable reads
+
+Locks rows until transaction ends
+
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+4. SERIALIZABLE
+Highest isolation level
+
+Prevents dirty reads, non-repeatable reads, and phantom reads
+
+Slowest but safest
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+5. SNAPSHOT
+Uses row versions
+
+Readers do not block writers
+
+Improves concurrency
+
+SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
+Isolation Level Summary
+Isolation Level	Dirty Read	Performance
+READ UNCOMMITTED	Yes	Fastest
+READ COMMITTED	No	Good
+REPEATABLE READ	No	Moderate
+SERIALIZABLE	No	Slowest
+SNAPSHOT	No	Good
+Locking
+A Lock prevents multiple users from modifying the same data at the same time.
+
+Purpose:
+
+Maintains data consistency
+
+Prevents conflicts
+
+Example:
+
+User A updates a row.
+
+User B must wait until User A finishes.
+
+Types of Locks
+Shared Lock (S)
+Used for reading data.
+
+Many users can read at the same time.
+
+Exclusive Lock (X)
+Used for updating or deleting data.
+
+Only one user can modify the data.
+
+Update Lock (U)
+Used before changing data.
+
+Helps avoid deadlocks.
+
+Blocking
+Blocking occurs when one transaction waits because another transaction is holding a lock.
+
+Example:
+
+Transaction A
+
+UPDATE Employee
+SET Salary = 50000
+WHERE Id = 1;
+Transaction B
+
+SELECT *
+FROM Employee
+WHERE Id = 1;
+Transaction B waits until Transaction A commits or rolls back.
+
 Transaction Deadlocks
+A Deadlock occurs when two transactions wait for each other forever.
+
+Example
+
+Transaction A
+
+Locks Row 1
+
+Wants Row 2
+
+Transaction B
+
+Locks Row 2
+
+Wants Row 1
+
+Both wait indefinitely.
+
+SQL Server automatically selects one transaction as the deadlock victim and rolls it back.
+
+How to Prevent Deadlocks
+Keep transactions short.
+
+Access tables in the same order.
+
+Commit transactions quickly.
+
+Use proper indexes.
+
+Avoid unnecessary locks.
+
+Complete Example
+BEGIN TRANSACTION;
+
+UPDATE Employee
+SET Salary = Salary + 1000
+WHERE Id = 1;
+
+IF @@ERROR <> 0
+BEGIN
+    ROLLBACK;
+END
+ELSE
+BEGIN
+    COMMIT;
+END
