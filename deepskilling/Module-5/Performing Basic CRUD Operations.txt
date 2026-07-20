@@ -1,0 +1,131 @@
+Entity Framework Core – CRUD Operations
+CRUD stands for:
+
+C – Create (Insert)
+
+R – Read (Retrieve)
+
+U – Update
+
+D – Delete
+
+1. Inserting Records into the Database (AddAsync)
+What is AddAsync()?
+AddAsync() adds a new entity to the DbContext. The data is saved to the database only after calling SaveChangesAsync().
+
+Example
+Student student = new Student
+{
+    Name = "Alice",
+    Age = 20
+};
+
+await context.Students.AddAsync(student);
+await context.SaveChangesAsync();
+Explanation
+AddAsync() → Adds the object to the context.
+
+SaveChangesAsync() → Saves it to the database.
+
+2. Retrieving Data
+A) Find() (Find by Primary Key)
+Used to retrieve a record using its Primary Key.
+
+var student = context.Students.Find(1);
+If Id = 1 exists, it returns the student; otherwise, it returns null.
+
+B) FirstOrDefault()
+Returns the first matching record or null if no record matches.
+
+var student = context.Students
+                     .FirstOrDefault(s => s.Name == "Alice");
+Example:
+
+Id	Name	Age
+1	Alice	20
+2	Bob	21
+3	Alice	22
+Output:
+
+Id = 1, Name = Alice
+Only the first matching record is returned.
+
+C) ToListAsync()
+Returns all records as a list.
+
+var students = await context.Students.ToListAsync();
+Example Output:
+
+Alice
+Bob
+Charlie
+David
+Difference
+Method	Purpose
+Find()	Retrieve by Primary Key
+FirstOrDefault()	Retrieve first matching record
+ToListAsync()	Retrieve all matching records
+3. Updating Records
+Step 1: Retrieve the Record
+var student = await context.Students.FindAsync(1);
+Step 2: Modify the Properties
+student.Name = "Alice Johnson";
+student.Age = 21;
+Step 3: Save Changes
+await context.SaveChangesAsync();
+Complete Example
+var student = await context.Students.FindAsync(1);
+
+if (student != null)
+{
+    student.Name = "Alice Johnson";
+    student.Age = 21;
+
+    await context.SaveChangesAsync();
+}
+Tracking Changes
+EF Core automatically tracks entities retrieved from the database.
+
+Example:
+
+var student = await context.Students.FindAsync(1);
+
+student.Age = 25;
+
+await context.SaveChangesAsync();
+You do not need to call an explicit update method because EF Core detects the modified property and updates only the changed values.
+
+4. Deleting Records
+A) Remove()
+Deletes a single record.
+
+var student = await context.Students.FindAsync(1);
+
+context.Students.Remove(student);
+
+await context.SaveChangesAsync();
+B) RemoveRange()
+Deletes multiple records at once.
+
+var students = await context.Students
+                            .Where(s => s.Age < 18)
+                            .ToListAsync();
+
+context.Students.RemoveRange(students);
+
+await context.SaveChangesAsync();
+All students with Age < 18 are deleted.
+
+Difference Between Remove() and RemoveRange()
+Method	Purpose
+Remove()	Deletes one entity
+RemoveRange()	Deletes multiple entities
+CRUD Summary
+Operation	Method
+Insert	AddAsync()
+Find by Primary Key	Find() / FindAsync()
+Find First Matching Record	FirstOrDefault() / FirstOrDefaultAsync()
+Get All Records	ToListAsync()
+Update	Modify entity + SaveChangesAsync()
+Delete One Record	Remove()
+Delete Multiple Records	RemoveRange()

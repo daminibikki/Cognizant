@@ -1,0 +1,221 @@
+1. Eager, Lazy, and Explicit Loading
+When entities have relationships (for example, Department → Students), EF Core provides three ways to load related data:
+
+Eager Loading
+
+Lazy Loading
+
+Explicit Loading
+
+A) Eager Loading
+What is Eager Loading?
+Eager Loading loads the main entity and its related entities in a single query using Include().
+
+Example
+var departments = await context.Departments
+    .Include(d => d.Students)
+    .ToListAsync();
+SQL (Conceptually)
+SELECT *
+FROM Departments
+JOIN Students
+ON Departments.DepartmentId = Students.DepartmentId;
+Result
+Department: CSE
+Students:
+- Alice
+- Bob
+Advantages
+Single database query.
+
+Good when related data is definitely needed.
+
+Better performance than making multiple database calls.
+
+Disadvantages
+Retrieves extra data even if it's not always needed.
+
+B) Lazy Loading
+What is Lazy Loading?
+Lazy Loading loads related data only when it is accessed.
+
+Example
+var department = context.Departments.First();
+
+var students = department.Students;
+When department.Students is accessed, EF Core automatically sends another query to the database.
+
+Advantages
+Loads only the data you actually use.
+
+Can reduce initial query size.
+
+Disadvantages
+Can cause many database queries (known as the N+1 query problem).
+
+Requires Lazy Loading proxies or navigation properties configured for lazy loading.
+
+C) Explicit Loading
+What is Explicit Loading?
+You manually decide when to load related data.
+
+Example
+var department = await context.Departments.FirstAsync();
+
+await context.Entry(department)
+             .Collection(d => d.Students)
+             .LoadAsync();
+Advantages
+Gives full control over when related data is loaded.
+
+Avoids unnecessary data retrieval.
+
+Disadvantages
+Requires additional code.
+
+May involve multiple database queries.
+
+Comparison
+Loading Type	When Data is Loaded	Method
+Eager Loading	Immediately	Include()
+Lazy Loading	On first access	Navigation property
+Explicit Loading	When requested manually	Load() / LoadAsync()
+2. Configuring Relationships
+A) One-to-One Relationship
+Example
+One person has one passport.
+
+Entity Classes
+public class Person
+{
+    public int PersonId { get; set; }
+
+    public Passport Passport { get; set; }
+}
+public class Passport
+{
+    public int PassportId { get; set; }
+
+    public int PersonId { get; set; }
+
+    public Person Person { get; set; }
+}
+Relationship:
+
+Person 1 -------- 1 Passport
+B) One-to-Many Relationship
+Example
+One department has many students.
+
+Department
+public class Department
+{
+    public int DepartmentId { get; set; }
+
+    public string Name { get; set; }
+
+    public List<Student> Students { get; set; }
+}
+Student
+public class Student
+{
+    public int StudentId { get; set; }
+
+    public string Name { get; set; }
+
+    public int DepartmentId { get; set; }
+
+    public Department Department { get; set; }
+}
+Relationship:
+
+Department
+    │
+    │
+    ▼
+Students
+C) Many-to-Many Relationship
+Example
+Students can enroll in many courses, and each course can have many students.
+
+Student
+public class Student
+{
+    public int StudentId { get; set; }
+
+    public List<Course> Courses { get; set; }
+}
+Course
+public class Course
+{
+    public int CourseId { get; set; }
+
+    public List<Student> Students { get; set; }
+}
+Relationship:
+
+Student  ↔  Course
+EF Core automatically creates a junction (join) table to store the many-to-many relationship.
+
+3. Navigating Circular References
+What is a Circular Reference?
+A circular reference happens when two related entities reference each other.
+
+Example:
+
+public class Department
+{
+    public int DepartmentId { get; set; }
+
+    public List<Student> Students { get; set; }
+}
+public class Student
+{
+    public int StudentId { get; set; }
+
+    public Department Department { get; set; }
+}
+Relationship:
+
+Department
+      │
+      ▼
+Students
+      ▲
+      │
+Department
+This creates a circular reference.
+
+Why is it a Problem?
+When returning these objects as JSON:
+
+Department
+   ↓
+Students
+   ↓
+Department
+   ↓
+Students
+   ↓
+...
+The serializer may repeatedly follow these references, causing a circular loop unless configured to handle it.
+
+How to Avoid Circular References
+1. Use DTOs (Recommended)
+Return only the data needed instead of the full entity graph.
+
+public class StudentDto
+{
+    public string Name { get; set; }
+
+    public string DepartmentName { get; set; }
+}
+2. Ignore Navigation Properties During Serialization
+Use serialization settings (such as reference handling) or attributes like [JsonIgnore] on navigation properties when appropriate.
+
+Example:
+
+[JsonIgnore]
+public Department Department { get; set; }
+3. Configure JSON Serializer
+Configure the JSON serializer to handle reference cycles if your application needs to return entities directly.

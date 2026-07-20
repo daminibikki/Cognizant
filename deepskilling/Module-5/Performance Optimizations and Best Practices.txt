@@ -1,0 +1,190 @@
+
+1. Query Caching and Tracking Behavior (AsNoTracking)
+What is Change Tracking?
+By default, EF Core tracks every entity it retrieves from the database.
+
+It keeps information about:
+
+Original values
+
+Current values
+
+Modified properties
+
+This allows EF Core to automatically update the database when SaveChanges() is called.
+
+Example (Tracking)
+var student = await context.Students.FindAsync(1);
+
+student.Name = "Alice";
+
+await context.SaveChangesAsync();
+Here, EF Core detects that Name changed and updates the database.
+
+What is AsNoTracking()?
+AsNoTracking() tells EF Core not to track the retrieved entities.
+
+Example
+var students = await context.Students
+    .AsNoTracking()
+    .ToListAsync();
+Advantages
+Faster queries
+
+Lower memory usage
+
+Best for read-only data
+
+Disadvantage
+Changes made to the retrieved objects are not saved automatically.
+
+Example
+Without AsNoTracking():
+
+var student = await context.Students.FirstAsync();
+student.Name = "Bob";
+
+await context.SaveChangesAsync();
+✔ Database is updated.
+
+With AsNoTracking():
+
+var student = await context.Students
+    .AsNoTracking()
+    .FirstAsync();
+
+student.Name = "Bob";
+
+await context.SaveChangesAsync();
+❌ Database is not updated because EF Core is not tracking the entity.
+
+When to Use AsNoTracking()
+Use it when:
+
+Displaying reports
+
+Listing products
+
+Viewing dashboards
+
+Any read-only operation
+
+2. Batch Processing and Bulk Operations
+Batch Processing
+Instead of saving each entity separately, save multiple changes together.
+
+Inefficient
+foreach (var student in students)
+{
+    context.Students.Add(student);
+    context.SaveChanges();
+}
+This sends one database request for each student.
+
+Better
+context.Students.AddRange(students);
+
+context.SaveChanges();
+All records are processed together, reducing database round-trips.
+
+Bulk Operations
+Bulk operations perform actions on many records efficiently.
+
+Examples:
+
+Bulk Insert
+
+Bulk Update
+
+Bulk Delete
+
+Example:
+
+context.Students.RemoveRange(students);
+
+context.SaveChanges();
+Deletes multiple records in one operation.
+
+3. Handling Concurrency with RowVersion Columns
+What is Concurrency?
+Concurrency occurs when multiple users modify the same record at the same time.
+
+Example:
+
+Employee Table
+
+Id	Name	Salary
+1	Alice	50000
+User A opens the record.
+
+User B opens the same record.
+
+User A updates Salary → 55000.
+
+User B updates Salary → 60000.
+
+Without concurrency control, one user's changes may overwrite the other's.
+
+Using RowVersion
+Add a RowVersion property to the entity.
+
+public class Employee
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public decimal Salary { get; set; }
+
+    [Timestamp]
+    public byte[] RowVersion { get; set; }
+}
+[Timestamp] tells EF Core to use this property for optimistic concurrency.
+
+Whenever the record changes, SQL Server automatically updates the RowVersion value.
+
+If another user has already modified the record, EF Core throws a DbUpdateConcurrencyException.
+
+Benefits
+Prevents accidental overwrites.
+
+Ensures data consistency.
+
+Detects conflicting updates.
+
+4. Using Compiled Queries for Performance Boost
+What are Compiled Queries?
+Normally, EF Core translates a LINQ query into SQL every time it runs.
+
+For frequently executed queries, this translation adds some overhead.
+
+Compiled queries allow EF Core to translate the query once and reuse it.
+
+Example
+private static readonly Func<AppDbContext, int, Student>
+compiledQuery =
+    EF.CompileQuery(
+        (AppDbContext context, int id) =>
+            context.Students.FirstOrDefault(s => s.Id == id)
+    );
+Using the compiled query:
+
+var student = compiledQuery(context, 1);
+Advantages
+Faster repeated execution.
+
+Reduced query compilation overhead.
+
+Useful for frequently executed queries.
+
+When to Use
+Use compiled queries when:
+
+The same query is executed many times.
+
+High-performance applications.
+
+Frequently called APIs.
+
+For simple or rarely used queries, normal LINQ is usually sufficient.
+
