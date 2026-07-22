@@ -1,0 +1,426 @@
+1. Authentication and Authorization in Microservices
+Although these terms are often used together, they have different purposes.
+
+Authentication
+Authentication verifies who the user is.
+
+Example:
+
+Login using username and password.
+
+Validate a JWT token.
+
+Authorization
+Authorization determines what the authenticated user is allowed to do.
+
+Example:
+
+Admin can delete users.
+
+Customer can view only their own orders.
+
+Flow
+User
+   │
+Login
+   │
+Authentication
+   │
+JWT Token
+   │
+Authorization
+   │
+Access API
+2. JWT (JSON Web Token)
+JWT is a secure token used to authenticate users in Web APIs.
+
+After successful login, the server generates a token and sends it to the client.
+
+The client sends the token with every request.
+
+JWT Structure
+Header
+.
+Payload
+.
+Signature
+Example:
+
+eyJhbGciOiJIUzI1NiIs...
+JWT Authentication Flow
+User
+   │
+Login
+   │
+API
+   │
+Generate JWT
+   │
+Client Stores Token
+   │
+Authorization: Bearer Token
+   │
+API validates Token
+   │
+Response
+Configure JWT in ASP.NET Core
+Register Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        // JWT configuration
+    });
+Enable Middleware
+app.UseAuthentication();
+
+app.UseAuthorization();
+Order is important:
+
+UseAuthentication()
+
+UseAuthorization()
+
+Protect Endpoints
+[Authorize]
+[HttpGet]
+public IActionResult GetProducts()
+{
+    return Ok();
+}
+Only authenticated users can access this endpoint.
+
+Allow Anonymous
+[AllowAnonymous]
+[HttpPost]
+public IActionResult Login()
+{
+    return Ok();
+}
+3. Securing ASP.NET Core Web API Endpoints
+Security methods include:
+
+JWT Authentication
+
+OAuth
+
+HTTPS
+
+API Keys
+
+Role-based Authorization
+
+Claims-based Authorization
+
+Role-Based Authorization
+[Authorize(Roles="Admin")]
+public IActionResult DeleteProduct()
+{
+    return Ok();
+}
+Only users with the Admin role can access this endpoint.
+
+Claims-Based Authorization
+[Authorize(Policy="EmployeeOnly")]
+Allows access based on user claims defined in the authentication token.
+
+4. Importance of Monitoring and Logging
+Monitoring helps answer questions like:
+
+Is the service running?
+
+How many requests are coming in?
+
+Are there errors?
+
+Is performance degrading?
+
+Logging helps developers:
+
+Debug issues
+
+Track requests
+
+Analyze failures
+
+Audit important events
+
+Monitoring Flow
+Client
+   │
+API
+   │
+Logs
+   │
+Monitoring Tool
+   │
+Dashboard
+5. Logging Strategies
+Common log levels
+
+Level	Purpose
+Information	Normal events
+Warning	Possible issues
+Error	Errors
+Critical	Application failure
+Debug	Development details
+Logging Example
+_logger.LogInformation("Order Created");
+
+_logger.LogWarning("Stock is Low");
+
+_logger.LogError("Database Connection Failed");
+Serilog Example
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log.txt")
+    .CreateLogger();
+Benefits
+
+Structured logging
+
+Multiple destinations
+
+Easy debugging
+
+6. Health Checks
+Health checks determine whether a service is functioning correctly.
+
+ASP.NET Core provides built-in support.
+
+Register
+
+builder.Services.AddHealthChecks();
+Map endpoint
+
+app.MapHealthChecks("/health");
+Request
+
+GET /health
+Response
+
+Healthy
+Why Health Checks?
+Kubernetes readiness checks
+
+Load balancers
+
+Monitoring tools
+
+Service availability verification
+
+7. Metrics Endpoints
+Metrics provide numerical information about an application's health and performance.
+
+Examples
+
+CPU usage
+
+Memory usage
+
+Request count
+
+Response time
+
+Error rate
+
+Example endpoint
+
+/metrics
+Monitoring tools like Prometheus can scrape these metrics for visualization.
+
+8. Deployment Strategies
+Rolling Update
+Instead of updating every instance at once, update them one by one.
+
+Old Version
+Old Version
+Old Version
+
+↓
+
+New
+Old
+Old
+
+↓
+
+New
+New
+Old
+
+↓
+
+New
+New
+New
+Advantages
+No downtime
+
+Safer deployment
+
+Easy rollback of affected instances
+
+Blue-Green Deployment
+Maintain two identical environments.
+
+Blue Environment (Current)
+
+↓
+
+Deploy New Version
+
+↓
+
+Green Environment
+
+↓
+
+Switch Traffic
+Benefits
+
+Near-zero downtime
+
+Easy rollback
+
+Safer releases
+
+Rolling Update vs Blue-Green
+Rolling Update	Blue-Green
+Update servers gradually	Maintain two complete environments
+Low resource usage	Requires extra infrastructure
+Small deployment risk	Fast rollback by switching traffic
+9. CI/CD
+CI/CD stands for:
+
+CI – Continuous Integration
+
+CD – Continuous Delivery/Deployment
+
+Purpose:
+
+Automatically build code
+
+Run tests
+
+Deploy applications
+
+CI/CD Flow
+Developer
+   │
+Git Push
+   │
+GitHub/Azure DevOps
+   │
+Build
+   │
+Test
+   │
+Deploy
+GitHub Actions
+Example workflow
+
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+GitHub Actions automatically executes workflows when events such as a push or pull request occur.
+
+Azure DevOps Pipeline
+Typical stages
+
+Code
+
+↓
+
+Build
+
+↓
+
+Test
+
+↓
+
+Release
+
+↓
+
+Production
+Benefits
+
+Automated builds
+
+Automated testing
+
+Automated deployment
+
+Faster releases
+
+10. Docker
+Docker packages an application with everything it needs into a container.
+
+Benefits
+
+Runs consistently across environments
+
+Lightweight
+
+Portable
+
+Easy deployment
+
+Docker Workflow
+Application
+
+↓
+
+Docker Image
+
+↓
+
+Docker Container
+
+↓
+
+Cloud / Server
+Sample Dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+WORKDIR /app
+
+COPY . .
+
+ENTRYPOINT ["dotnet","ProductService.dll"]
+Common Docker Commands
+Build Image
+
+docker build -t productservice .
+Run Container
+
+docker run -p 5000:80 productservice
+List Containers
+
+docker ps
+Stop Container
+
+docker stop <container-id>
+Complete Microservices Deployment Flow
+Developer
+     │
+GitHub
+     │
+GitHub Actions / Azure DevOps
+     │
+Build
+     │
+Run Tests
+     │
+Create Docker Image
+     │
+Push Image
+     │
+Deploy
+     │
+Kubernetes / Cloud

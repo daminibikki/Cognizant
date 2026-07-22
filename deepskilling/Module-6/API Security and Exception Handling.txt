@@ -1,0 +1,272 @@
+1. Global Exception Handling
+Global Exception Handling is a mechanism to catch all unhandled exceptions in one place instead of writing try-catch blocks in every controller.
+
+Why use it?
+Centralized error handling
+
+Cleaner controller code
+
+Consistent error responses
+
+Easier debugging
+
+Without Global Exception Handling
+[HttpGet]
+public IActionResult GetStudent()
+{
+    try
+    {
+        // Code
+    }
+    catch(Exception ex)
+    {
+        return BadRequest(ex.Message);
+    }
+}
+Every method needs a try-catch, which leads to repetitive code.
+
+With Global Exception Handling
+Client
+   │
+Request
+   │
+Controller
+   │
+Exception
+   │
+Global Exception Middleware
+   │
+JSON Error Response
+Example Middleware
+public class ExceptionMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public ExceptionMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        try
+        {
+            await _next(context);
+        }
+        catch(Exception ex)
+        {
+            context.Response.StatusCode = 500;
+
+            await context.Response.WriteAsync("Something went wrong");
+        }
+    }
+}
+Register in Program.cs
+
+app.UseMiddleware<ExceptionMiddleware>();
+2. Error Responses
+Instead of returning plain text, APIs usually return JSON.
+
+Example
+
+{
+   "status":500,
+   "message":"Internal Server Error"
+}
+Another example
+
+{
+   "status":404,
+   "message":"Student Not Found"
+}
+Common HTTP Status Codes
+Code	Meaning
+200	OK
+201	Created
+400	Bad Request
+401	Unauthorized
+403	Forbidden
+404	Not Found
+500	Internal Server Error
+3. Logging
+Logging means recording application events.
+
+Logs help developers:
+
+Find bugs
+
+Monitor applications
+
+Track requests
+
+Analyze errors
+
+Types of Logs
+Log Level	Purpose
+Information	Normal application events
+Warning	Potential problems
+Error	Errors that occurred
+Critical	Serious failures
+Debug	Development details
+4. Serilog
+Serilog is a popular logging library for .NET.
+
+It can write logs to:
+
+Console
+
+Text files
+
+SQL Server
+
+Elasticsearch
+
+Azure
+
+Seq
+
+Install Serilog Packages
+Serilog.AspNetCore
+
+Serilog.Sinks.Console
+
+Serilog.Sinks.File
+Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log.txt")
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+Logging Example
+_logger.LogInformation("Student Created");
+
+_logger.LogWarning("Age is below 18");
+
+_logger.LogError("Database Connection Failed");
+Example log
+
+2026-07-22 10:00:00
+
+Information
+
+Student Created
+5. API Keys
+An API Key is a unique secret string used to identify the client making a request.
+
+The client includes the key in every request.
+
+API Key Flow
+Client
+   │
+API Key
+   │
+Server validates key
+   │
+Access Granted
+Example Request
+GET /api/student
+
+X-API-Key: 12345ABCDE
+Server checks whether the key is valid.
+
+If valid
+
+200 OK
+If invalid
+
+401 Unauthorized
+Simple Validation
+if(Request.Headers["X-API-Key"] != "12345")
+{
+    return Unauthorized();
+}
+Advantages of API Keys
+Simple to implement
+
+Fast authentication
+
+Good for internal APIs
+
+Useful for tracking API usage
+
+Limitations
+No user identity
+
+No roles or permissions
+
+Can be leaked if not protected
+
+Usually combined with HTTPS
+
+6. OAuth
+OAuth (Open Authorization) is a standard protocol that allows applications to access resources without sharing the user's password.
+
+Example:
+
+Login using
+
+Google
+
+Microsoft
+
+GitHub
+
+Facebook
+
+OAuth Flow
+User
+   │
+Login
+   │
+Google
+   │
+Authorization Code
+   │
+Access Token
+   │
+Application
+The application receives an access token, not the user's password.
+
+OAuth Components
+Component	Purpose
+Resource Owner	User
+Client	Application
+Authorization Server	Issues tokens
+Resource Server	API
+OAuth Token Example
+eyJhbGciOiJIUzI1NiIs...
+The client sends
+
+Authorization: Bearer eyJhbGciOiJIUz...
+The API validates the token before allowing access.
+
+OAuth vs API Key
+API Key	OAuth
+Simple string	Access token
+Identifies the application	Identifies both the user and application
+No user login	Supports user login
+Basic security	Strong security
+Best for internal APIs	Best for public APIs
+JWT vs OAuth
+Many students confuse these.
+
+JWT	OAuth
+Token format	Authorization framework
+Stores claims	Issues access tokens
+Used for authentication	Used for authorization
+Can be used inside OAuth	Uses tokens such as JWT or opaque tokens
+Remember: OAuth is the authorization framework, while JWT is one possible token format used within OAuth.
+
+Security Flow
+Client
+   │
+API Key / OAuth Token
+   │
+Authentication
+   │
+Authorization
+   │
+Controller
+   │
+Database

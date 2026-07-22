@@ -1,0 +1,231 @@
+
+1. Introduction to SOAP APIs
+SOAP (Simple Object Access Protocol) is a protocol used for exchanging structured information between applications.
+
+Unlike REST, SOAP follows strict standards and mainly uses XML for communication.
+
+It is commonly used in:
+
+Banking
+
+Insurance
+
+Government applications
+
+Enterprise systems
+
+SOAP Architecture
+Client
+   │
+SOAP Request (XML)
+   │
+SOAP Web Service
+   │
+Database
+   │
+SOAP Response (XML)
+   │
+Client
+Features of SOAP
+Uses XML for requests and responses.
+
+Platform-independent (Java, .NET, Python, etc.).
+
+Highly secure (supports WS-Security).
+
+Built-in error handling.
+
+Supports transactions and reliable messaging.
+
+2. REST vs SOAP
+Feature	REST	SOAP
+Full Form	Representational State Transfer	Simple Object Access Protocol
+Data Format	JSON (mostly)	XML only
+Protocol	Uses HTTP	HTTP, SMTP, TCP, etc.
+Speed	Faster	Slower
+Flexibility	High	Less
+Security	Basic (HTTPS, JWT)	Advanced (WS-Security)
+Popularity	Most modern APIs	Legacy and enterprise systems
+3. SOAP Message Structure
+A SOAP message is an XML document with four main parts:
+
+SOAP Envelope
+    │
+    ├── Header (Optional)
+    ├── Body (Required)
+    └── Fault (Optional)
+Example SOAP Request
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <GetStudent>
+         <Id>1</Id>
+      </GetStudent>
+   </soap:Body>
+</soap:Envelope>
+Example SOAP Response
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <GetStudentResponse>
+         <Name>Rahul</Name>
+         <Age>22</Age>
+      </GetStudentResponse>
+   </soap:Body>
+</soap:Envelope>
+4. What is WCF?
+WCF (Windows Communication Foundation) is a Microsoft framework used to create SOAP-based services.
+
+It enables communication between applications using protocols like:
+
+HTTP
+
+TCP
+
+Named Pipes
+
+MSMQ
+
+WCF was widely used with the .NET Framework for enterprise applications.
+
+WCF Architecture
+Client
+   │
+SOAP Request
+   │
+WCF Service
+   │
+Business Logic
+   │
+Database
+   │
+SOAP Response
+5. Main Components of WCF
+Service
+Contains the business logic.
+
+Service Contract
+Defines the operations exposed by the service.
+
+Example:
+
+[ServiceContract]
+public interface IStudentService
+{
+    [OperationContract]
+    string GetStudent(int id);
+}
+[ServiceContract] marks an interface as a WCF service contract.
+
+[OperationContract] marks a method that clients can call.
+
+Service Implementation
+public class StudentService : IStudentService
+{
+    public string GetStudent(int id)
+    {
+        return "Rahul";
+    }
+}
+6. Consuming SOAP Services in ASP.NET Core
+ASP.NET Core does not include WCF server support, but it can consume (call) existing SOAP services.
+
+Steps
+Obtain the SOAP service's WSDL (Web Services Description Language).
+
+Generate a client proxy.
+
+Call the SOAP service from your ASP.NET Core application.
+
+Example
+var client = new StudentServiceClient();
+
+var result = await client.GetStudentAsync(1);
+
+Console.WriteLine(result.Name);
+The generated client handles XML serialization and communication with the SOAP service.
+
+7. What is WSDL?
+WSDL (Web Services Description Language) is an XML document that describes a SOAP service.
+
+It includes:
+
+Available operations
+
+Input and output parameters
+
+Endpoint addresses
+
+Communication protocols
+
+Example URL:
+
+https://example.com/StudentService.svc?wsdl
+Clients use the WSDL to automatically generate proxy classes.
+
+8. Creating SOAP Services Using WCF
+Step 1: Create the Service Contract
+using System.ServiceModel;
+
+[ServiceContract]
+public interface ICalculatorService
+{
+    [OperationContract]
+    int Add(int a, int b);
+}
+Step 2: Implement the Service
+public class CalculatorService : ICalculatorService
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+Step 3: Host the Service
+The service can be hosted in:
+
+IIS
+
+Windows Service
+
+Self-hosted application
+
+Clients can then send SOAP requests to the service endpoint.
+
+9. SOAP vs WCF
+SOAP	WCF
+Communication protocol	Microsoft framework for building communication services
+Uses XML messages	Can create SOAP services
+Platform-independent	Primarily associated with the .NET Framework
+Defines message format	Provides infrastructure for implementing services
+10. Advantages of SOAP and WCF
+SOAP
+Strong security (WS-Security)
+
+Standardized protocol
+
+Reliable messaging
+
+Cross-platform support
+
+WCF
+Multiple communication protocols
+
+Supports SOAP services
+
+Built-in security features
+
+Suitable for enterprise applications
+
+11. Limitations
+SOAP
+XML messages are larger than JSON.
+
+More complex to develop and debug.
+
+Generally slower than REST.
+
+WCF
+Primarily designed for the .NET Framework.
+
+Not supported as a server framework in modern ASP.NET Core.
+
+Many new applications prefer REST or gRPC unless SOAP compatibility is required.

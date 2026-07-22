@@ -1,0 +1,350 @@
+1. Installing Angular Language Extension for VS Code
+The Angular Language Service extension provides better support for Angular development in Visual Studio Code.
+
+Benefits
+Auto-completion
+
+Error detection
+
+Go to Definition
+
+Hover information
+
+Template IntelliSense
+
+Better debugging support
+
+Installation Steps
+Open Visual Studio Code.
+
+Click Extensions (or press Ctrl + Shift + X).
+
+Search for:
+
+Angular Language Service
+Install the extension published by Angular.
+
+Restart VS Code if prompted.
+
+Features
+HTML template auto-completion
+
+TypeScript IntelliSense
+
+Error highlighting
+
+Component navigation
+
+Directive suggestions
+
+2. Attaching VS Code Debugger
+VS Code has a built-in debugger that allows you to debug Angular applications directly from the editor.
+
+Step 1: Start Angular
+ng serve
+Output
+
+http://localhost:4200
+Step 2: Open Run and Debug
+Click
+
+Run and Debug
+or press
+
+Ctrl + Shift + D
+Step 3: Create launch.json
+Choose
+
+Chrome
+or
+
+Microsoft Edge
+VS Code creates
+
+.vscode/
+    launch.json
+3. launch.json Configuration
+Example
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Angular",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
+Explanation
+Property	Purpose
+version	Debug configuration version
+type	Browser to launch
+request	Launch or attach
+name	Configuration name
+url	Angular application URL
+webRoot	Project root directory
+4. Launch Debugger
+Run
+
+ng serve
+Press
+
+F5
+or click
+
+Start Debugging
+The browser opens with the debugger attached.
+
+5. Setting Breakpoints in TypeScript
+Breakpoints pause execution at a specific line.
+
+Example
+
+export class StudentComponent {
+
+    name = "Rahul";
+
+    show()
+    {
+        console.log(this.name);
+    }
+
+}
+Click beside
+
+console.log(this.name);
+A red dot appears.
+
+When execution reaches this line, it pauses automatically.
+
+6. Watches
+A Watch lets you continuously monitor the value of a variable or expression while debugging.
+
+Example
+
+let total = price * quantity;
+Add
+
+total
+to the Watch panel.
+
+Whenever execution pauses, VS Code displays the current value.
+
+Multiple Watches
+price
+
+quantity
+
+total
+
+student.name
+Useful for tracking changing values.
+
+7. Variables Panel
+During debugging, VS Code shows:
+
+Local variables
+
+Global variables
+
+Object properties
+
+Function parameters
+
+Example
+
+student = {
+    id: 1,
+    name: "Rahul"
+}
+Variables Window
+
+student
+
+id = 1
+
+name = Rahul
+8. Call Stack
+Example
+
+login()
+
+↓
+
+validate()
+
+↓
+
+checkUser()
+Call Stack
+
+checkUser()
+
+validate()
+
+login()
+This helps identify where the current function was called from.
+
+9. Debug Console
+The Debug Console allows you to execute JavaScript or inspect variables while the application is paused.
+
+Example
+
+student.name
+Output
+
+Rahul
+You can also evaluate expressions such as:
+
+price * quantity
+10. Debugging Angular Services
+Angular services usually contain business logic and API calls.
+
+Example
+
+@Injectable({
+    providedIn: 'root'
+})
+export class StudentService {
+
+    getStudents()
+    {
+        return this.http.get("/api/student");
+    }
+
+}
+Set a breakpoint on
+
+return this.http.get("/api/student");
+When the component calls the service, execution pauses, allowing you to inspect:
+
+Request URL
+
+Parameters
+
+Returned data
+
+11. Debugging API Response
+Component
+
+this.studentService
+    .getStudents()
+    .subscribe(data =>
+    {
+        console.log(data);
+    });
+Set breakpoints:
+
+Before the API call
+
+Inside subscribe()
+
+Inspect:
+
+Response object
+
+Array contents
+
+Error messages
+
+12. Debugging NgRx Store
+NgRx is a state management library for Angular applications.
+
+It stores application state in a central store.
+
+Example
+
+Component
+
+↓
+
+Action
+
+↓
+
+Reducer
+
+↓
+
+Store
+
+↓
+
+Component
+Store Example
+store.dispatch(loadStudents());
+Breakpoint:
+
+store.dispatch(...)
+Inspect
+
+Action
+
+↓
+
+Reducer
+
+↓
+
+Updated State
+Selecting Data
+this.store.select(selectStudents)
+.subscribe(data =>
+{
+    console.log(data);
+});
+Breakpoint inside
+
+subscribe()
+Inspect:
+
+Current store state
+
+Student list
+
+Updated values
+
+13. What Can Be Debugged in NgRx?
+Actions
+
+Reducers
+
+Effects
+
+Selectors
+
+Store State
+
+14. Angular Debugging Workflow
+ng serve
+
+↓
+
+F5
+
+↓
+
+Browser Opens
+
+↓
+
+Breakpoint Hit
+
+↓
+
+Inspect Variables
+
+↓
+
+Watch Values
+
+↓
+
+Call Stack
+
+↓
+
+Continue Execution
