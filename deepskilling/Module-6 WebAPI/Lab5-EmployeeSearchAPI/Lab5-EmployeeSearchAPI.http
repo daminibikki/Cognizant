@@ -1,0 +1,6 @@
+@Lab5_EmployeeSearchAPI_HostAddress = http://localhost:5049
+
+GET {{Lab5_EmployeeSearchAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

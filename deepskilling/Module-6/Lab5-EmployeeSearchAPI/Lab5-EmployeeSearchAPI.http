@@ -1,6 +1,0 @@
-@Lab5_EmployeeSearchAPI_HostAddress = http://localhost:5039
-
-GET {{Lab5_EmployeeSearchAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
