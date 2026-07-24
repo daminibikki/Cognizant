@@ -1,0 +1,8 @@
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.csproj.AssemblyReference.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.AssemblyInfoInputs.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.AssemblyInfo.cs
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-06-WebAPI\Lab5-EmployeeSearchAPI\obj\Debug\net8.0\Lab5-EmployeeSearchAPI.sourcelink.json

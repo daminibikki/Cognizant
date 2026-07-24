@@ -1,0 +1,6 @@
+@Lab4_EmployeeDBAPI_HostAddress = http://localhost:5285
+
+GET {{Lab4_EmployeeDBAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

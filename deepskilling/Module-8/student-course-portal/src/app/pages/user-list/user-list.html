@@ -1,0 +1,19 @@
+<h2>User List (API)</h2>
+
+<table border="1" cellpadding="8">
+
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>City</th>
+  </tr>
+
+  <tr *ngFor="let user of users">
+    <td>{{ user.id }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.address.city }}</td>
+  </tr>
+
+</table>

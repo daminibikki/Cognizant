@@ -1,0 +1,25 @@
+<div class="card">
+
+  <h3>{{ course.name | uppercase }}</h3>
+
+  <p>ID: {{ course.id }}</p>
+
+  <p>Code: {{ course.code | lowercase }}</p>
+
+  <p>Credits: {{ course.credits }}</p>
+
+  <p>Fee: {{ course.fee | currency:'INR' }}</p>
+
+  <p *ngIf="course.available">
+    Available
+  </p>
+
+  <p *ngIf="!course.available">
+    Not Available
+  </p>
+
+  <button (click)="enrollRequested.emit(course.id)">
+    Enroll
+  </button>
+
+</div>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Lab1-HelloWebAPI.props" />
+</Project>

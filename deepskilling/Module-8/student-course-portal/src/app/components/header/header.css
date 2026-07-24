@@ -1,0 +1,21 @@
+nav {
+  background: #1976d2;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  gap: 20px;
+}
+
+h2 {
+  margin-right: auto;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

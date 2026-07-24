@@ -1,0 +1,6 @@
+@Lab1_HelloWebAPI_HostAddress = http://localhost:5131
+
+GET {{Lab1_HelloWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

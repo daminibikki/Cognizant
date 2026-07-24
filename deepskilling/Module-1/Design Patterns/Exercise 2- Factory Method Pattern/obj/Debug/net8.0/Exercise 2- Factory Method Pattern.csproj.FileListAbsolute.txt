@@ -1,0 +1,15 @@
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\bin\Debug\net8.0\Exercise 2- Factory Method Pattern.exe
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\bin\Debug\net8.0\Exercise 2- Factory Method Pattern.deps.json
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\bin\Debug\net8.0\Exercise 2- Factory Method Pattern.runtimeconfig.json
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\bin\Debug\net8.0\Exercise 2- Factory Method Pattern.dll
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\bin\Debug\net8.0\Exercise 2- Factory Method Pattern.pdb
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.AssemblyInfoInputs.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.AssemblyInfo.cs
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.sourcelink.json
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.dll
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\refint\Exercise 2- Factory Method Pattern.dll
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.pdb
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\Exercise 2- Factory Method Pattern.genruntimeconfig.cache
+C:\Users\Dell\Desktop\cogni\DeepSkilling\Module-01-Design Patterns\Exercise 2- Factory Method Pattern\obj\Debug\net8.0\ref\Exercise 2- Factory Method Pattern.dll

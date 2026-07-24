@@ -1,0 +1,61 @@
+<h2>Student Registration</h2>
+
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+
+  <label>Name</label><br>
+
+  <input type="text" formControlName="name">
+
+  <div *ngIf="studentForm.get('name')?.invalid && studentForm.get('name')?.touched">
+    Name is required (minimum 3 characters)
+  </div>
+
+  <br><br>
+
+  <label>Email</label><br>
+
+  <input type="email" formControlName="email">
+
+  <div *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+    Enter a valid email
+  </div>
+
+  <br><br>
+
+  <label>Age</label><br>
+
+  <input type="number" formControlName="age">
+
+  <div *ngIf="studentForm.get('age')?.invalid && studentForm.get('age')?.touched">
+    Age must be 18 or above
+  </div>
+
+  <br><br>
+
+  <label>Course</label><br>
+
+  <select formControlName="course">
+
+    <option value="">Select</option>
+
+    <option>Angular</option>
+
+    <option>React</option>
+
+    <option>Java</option>
+
+    <option>Python</option>
+
+  </select>
+
+  <div *ngIf="studentForm.get('course')?.invalid && studentForm.get('course')?.touched">
+    Select a course
+  </div>
+
+  <br><br>
+
+  <button type="submit" [disabled]="studentForm.invalid">
+    Register
+  </button>
+
+</form>

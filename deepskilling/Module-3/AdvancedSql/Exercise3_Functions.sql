@@ -1,0 +1,21 @@
+USE AdvancedSQL;
+
+
+DELIMITER //
+
+CREATE FUNCTION GetBonus(
+salary INT
+)
+RETURNS INT
+DETERMINISTIC
+
+BEGIN
+
+RETURN salary * 10/100;
+
+END //
+
+DELIMITER ;
+
+
+SELECT GetBonus(50000) AS Bonus;
